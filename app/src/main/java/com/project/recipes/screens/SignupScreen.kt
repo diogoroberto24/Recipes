@@ -32,11 +32,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.project.recipes.R
+import com.project.recipes.navigation.Destination
 import com.project.recipes.ui.theme.RecipesTheme
 
 @Composable
-fun SignupScreen(modifier: Modifier = Modifier) {
+fun SignupScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -56,7 +60,7 @@ fun SignupScreen(modifier: Modifier = Modifier) {
             TitleComponent()
             Spacer(modifier = Modifier.height(48.dp))
             UserImage()
-            SignupUserForm()
+            SignupUserForm(navController)
         }
     }
 }
@@ -69,7 +73,7 @@ fun SignupScreen(modifier: Modifier = Modifier) {
 @Composable
 private fun SignupScreenPreview() {
     RecipesTheme() {
-        SignupScreen()
+        SignupScreen(rememberNavController())
     }
 }
 @Composable
@@ -137,9 +141,9 @@ private fun UserImagePreview() {
 }
 
 @Composable
-fun SignupUserForm(modifier: Modifier = Modifier) {
+fun SignupUserForm(navController: NavController) {
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(32.dp)
     ) {
@@ -234,7 +238,10 @@ fun SignupUserForm(modifier: Modifier = Modifier) {
         // Botão Create Account
         Spacer(modifier = Modifier.height(32.dp))
         Button(
-            onClick = {},
+            onClick = {
+                navController
+                    .navigate(Destination.LoginScreen.route)
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp),
@@ -255,6 +262,6 @@ fun SignupUserForm(modifier: Modifier = Modifier) {
 @Composable
 private fun SignupUserFormPreview() {
     RecipesTheme() {
-        SignupUserForm()
+        SignupUserForm(rememberNavController())
     }
 }

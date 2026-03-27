@@ -4,7 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.project.recipes.navigation.NavigationRoutes
+import com.project.recipes.screens.HomeScreen
 import com.project.recipes.screens.InitialScreen
+import com.project.recipes.screens.LoginScreen
 import com.project.recipes.screens.SignupScreen
 import com.project.recipes.ui.theme.RecipesTheme
 
@@ -14,8 +17,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RecipesTheme {
-                //InitialScreen()
-                SignupScreen()
+                NavigationRoutes()
             }
         }
     }
