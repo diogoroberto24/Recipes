@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -51,6 +55,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.project.recipes.ui.theme.RecipesTheme
 import com.project.recipes.R
+import com.project.recipes.components.CategoryItem
+import com.project.recipes.components.RecipeItem
+import com.project.recipes.model.Recipe
+import com.project.recipes.repository.getAllCategories
+import com.project.recipes.repository.getAllRecipes
 
 @Composable
 fun HomeScreen(navController: NavHostController, email: String?) {
@@ -196,17 +205,22 @@ private fun MyBottonAppBarPreview() {
 
 @Composable
 fun ContentScreen(modifier: Modifier = Modifier) {
+
+    // Variavel que irá armazenar a lista de categorias
+    val categories = getAllCategories()
+    val recipes = getAllRecipes()
+
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 0.dp)
     ) {
         OutlinedTextField(
             value = "",
             onValueChange = {},
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp),
+                .padding(horizontal = 16.dp, vertical = 8.dp),
             shape = RoundedCornerShape(12.dp),
             colors = OutlinedTextFieldDefaults
                 .colors(
@@ -233,7 +247,7 @@ fun ContentScreen(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(16.dp))
         Card(
             modifier = Modifier
-                .padding(bottom = 16.dp)
+                .padding(horizontal = 16.dp, vertical = 4.dp)
                 .fillMaxWidth()
                 .height(116.dp)
         ) {
@@ -246,16 +260,38 @@ fun ContentScreen(modifier: Modifier = Modifier) {
             )
         }
         Text(
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 4.dp),
             text = stringResource(R.string.categories),
             color = MaterialTheme.colorScheme.primary,
             style = MaterialTheme.typography.labelMedium
         )
-        Spacer(modifier = Modifier.height(116.dp))
+        LazyRow(
+            contentPadding = PaddingValues(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            items(categories){ category ->
+                CategoryItem(category)
+            }
+        }
         Text(
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 8.dp),
             text = "Newly added recipes",
             color = MaterialTheme.colorScheme.primary,
             style = MaterialTheme.typography.labelMedium
         )
+        LazyColumn(
+            contentPadding = PaddingValues(
+                vertical = 8.dp,
+                horizontal = 16.dp
+            ),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(recipes){ recipe ->
+                RecipeItem(recipe)
+            }
+        }
     }
 }
 
