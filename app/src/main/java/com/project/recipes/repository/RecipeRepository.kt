@@ -40,5 +40,65 @@ fun getAllRecipes() = listOf<Recipe>(
         cookingTime = 10,
         createdAt = LocalDate.now(),
         image = R.drawable.pao_calabresa
+    ),
+    Recipe(
+        id = 4,
+        category = Category(id = 5000, name = "Vegetables"),
+        user = User(id = 400, name = "Mariana Dias"),
+        difficultLevel = DifficultLevel.ADVANCED,
+        name = "Sopa de Legumes",
+        description = "Hearty vegetable soup: warm, nourishing, fresh, wholesome goodness.",
+        cookingTime = 45,
+        createdAt = LocalDate.now(),
+        image = R.drawable.sopa_legumes
+    ),
+    Recipe(
+        id = 5,
+        category = Category(id = 2000, name = "Beef"),
+        user = User(id = 500, name = "Carlos Almeida"),
+        difficultLevel = DifficultLevel.ADVANCED,
+        name = "Feijoada",
+        description = "Rich, smoky, hearty, bean and meat stew.",
+        cookingTime = 120,
+        createdAt = LocalDate.now(),
+        image = R.drawable.feijoada
     )
 )
+
+fun getRecipesByCategory(id: Int) = getAllRecipes()
+    .filter { recipe ->
+        recipe.category.id == id
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

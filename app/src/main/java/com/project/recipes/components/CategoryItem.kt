@@ -1,6 +1,7 @@
 package com.project.recipes.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,11 +23,19 @@ import com.project.recipes.model.Category
 import com.project.recipes.ui.theme.RecipesTheme
 
 @Composable
-fun CategoryItem(category: Category = Category()) {
+fun CategoryItem(
+    category: Category = Category(),
+    onClick: () -> Unit
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .width(90.dp)
+            .clickable(
+                onClick = {
+                    onClick()
+                }
+            )
     ) {
         Card(
             modifier = Modifier
@@ -62,6 +71,6 @@ fun CategoryItem(category: Category = Category()) {
 @Composable
 private fun CategoryItemPreview() {
     RecipesTheme() {
-        CategoryItem()
+        CategoryItem(onClick = {})
     }
 }

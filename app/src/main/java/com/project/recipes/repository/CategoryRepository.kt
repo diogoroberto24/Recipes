@@ -20,3 +20,8 @@ fun getAllCategories() = listOf<Category>(
     Category(id = 7000, name = "Drinks",
         image = R.drawable.drink, background = Color(0xFF80DEEA))
 )
+
+fun getCategoryById(id: Int) = getAllCategories()
+    .find { category ->
+        category.id == id
+    }

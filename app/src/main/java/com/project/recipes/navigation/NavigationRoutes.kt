@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.project.recipes.screens.CategoryRecipeScreen
 import com.project.recipes.screens.HomeScreen
 import com.project.recipes.screens.InitialScreen
 import com.project.recipes.screens.LoginScreen
@@ -43,6 +44,17 @@ fun NavigationRoutes() {
         }
         composable(Destination.LoginScreen.route){
             LoginScreen(navController)
+        }
+        composable (
+            route = Destination.CategoryRecipeScreen.route,
+            arguments = listOf(
+                navArgument("categoryId"){
+                    type = NavType.IntType
+                }
+            )
+        ){
+            val categoryId = it.arguments?.getInt("categoryId")
+            CategoryRecipeScreen(categoryId)
         }
     }
 }

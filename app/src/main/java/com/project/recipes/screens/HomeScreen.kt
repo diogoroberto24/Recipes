@@ -51,6 +51,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.project.recipes.ui.theme.RecipesTheme
@@ -58,6 +59,7 @@ import com.project.recipes.R
 import com.project.recipes.components.CategoryItem
 import com.project.recipes.components.RecipeItem
 import com.project.recipes.model.Recipe
+import com.project.recipes.navigation.Destination
 import com.project.recipes.repository.getAllCategories
 import com.project.recipes.repository.getAllRecipes
 
@@ -84,7 +86,10 @@ fun HomeScreen(navController: NavHostController, email: String?) {
                 }
             },
         ) { paddingValues ->
-            ContentScreen(modifier = Modifier.padding(paddingValues))
+            ContentScreen(
+                modifier = Modifier.padding(paddingValues),
+                navController = navController
+            )
         }
     }
 }
@@ -204,7 +209,10 @@ private fun MyBottonAppBarPreview() {
 }
 
 @Composable
-fun ContentScreen(modifier: Modifier = Modifier) {
+fun ContentScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController
+) {
 
     // Variavel que irá armazenar a lista de categorias
     val categories = getAllCategories()
@@ -271,7 +279,15 @@ fun ContentScreen(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(categories){ category ->
-                CategoryItem(category)
+                CategoryItem(
+                    category = category,
+                    onClick = {
+                    navController.navigate(
+                        route = Destination
+                            .CategoryRecipeScreen
+                            .createRoute(categoryId = category.id)
+                    )
+                })
             }
         }
         Text(
@@ -299,7 +315,7 @@ fun ContentScreen(modifier: Modifier = Modifier) {
 @Composable
 private fun ContentScreenPreview() {
     RecipesTheme() {
-        ContentScreen()
+        ContentScreen(navController = rememberNavController())
     }
 }
 
