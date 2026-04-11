@@ -44,6 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -60,6 +61,8 @@ import com.project.recipes.components.CategoryItem
 import com.project.recipes.components.RecipeItem
 import com.project.recipes.model.Recipe
 import com.project.recipes.navigation.Destination
+import com.project.recipes.repository.SharedPreferencesUserRepository
+import com.project.recipes.repository.UserRepository
 import com.project.recipes.repository.getAllCategories
 import com.project.recipes.repository.getAllRecipes
 
@@ -105,6 +108,12 @@ private fun HomeScreenPreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyTopAppBar(email: String) {
+
+    val userRepository: UserRepository =
+        SharedPreferencesUserRepository(LocalContext.current)
+
+    val user = userRepository.getUser()
+
     TopAppBar(
         modifier = Modifier
             .fillMaxWidth(),
@@ -119,7 +128,7 @@ fun MyTopAppBar(email: String) {
             ) {
                 Column() {
                     Text(
-                        text = "Hello, João!",
+                        text = "Hello, ${user.name}!",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
